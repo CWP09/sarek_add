@@ -33,7 +33,8 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
 
     ch_vcf_tbi = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi, failOnDuplicate: true, failOnMismatch: true)
 
-    ch_vcf_transformed = ch_vcf.map { meta, vcf, extra ->
+    ch_vcf_transformed = ch_vcf.map { vcf ->
+        def meta = [id: vcf.baseName]
         return [meta, vcf]
     }
 
