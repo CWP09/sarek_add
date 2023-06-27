@@ -38,12 +38,14 @@ process VCF2MAF {
         VEP_VERSION=""
     fi
 
+    gunzip -c $vcf > uncompressed_${vcf.baseName}.vcf
+
     vcf2maf.pl \\
         $args \\
         \$VEP_CMD \\
         $vep_cache_cmd \\
         --ref-fasta $fasta \\
-        --input-vcf $vcf \\
+        --input-vcf uncompressed_${vcf.baseName}.vcf \\
         --output-maf ${prefix}.maf
 
     cat <<-END_VERSIONS > versions.yml
