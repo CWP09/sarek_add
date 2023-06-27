@@ -38,7 +38,6 @@ process ENSEMBLVEP_VEP {
         -i $vcf \\
         -o ${prefix}.${file_extension} \\
         $args \\
-        $compress_cmd \\
         $reference \\
         --assembly $genome \\
         --species $species \\
