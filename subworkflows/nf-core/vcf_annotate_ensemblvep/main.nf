@@ -6,22 +6,6 @@ include { ENSEMBLVEP_VEP } from '../../../modules/nf-core/ensemblvep/vep/main'
 include { TABIX_TABIX    } from '../../../modules/nf-core/tabix/tabix/main'
 include { VCF2MAF } from '../../../modules/nf-core/vcf2maf/main.nf'
 
-process GUNZIP {
-    tag "$meta.id"
-    label 'process_low'
-
-    input:
-    tuple val(meta), path(vcf)
-
-    output:
-    tuple val(meta), path("*.vcf"), emit: vcf
-
-    script:
-    def prefix = "${meta.id}"
-    """
-    gunzip -c $vcf > ${prefix}.vcf
-    """
-}
 
 
 workflow VCF_ANNOTATE_ENSEMBLVEP {
@@ -51,12 +35,11 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
 
     ch_vcf_tbi = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi, failOnDuplicate: true, failOnMismatch: true)
 
-    GUNZIP(ch_vcf_tbi)
 
-    VCF2MAF(
-        GUNZIP.out.vcf,
-        ch_fasta.single().map { it[1] }, 
-        ch_cache.single().map { it[1] }
+     VCF2MAF(
+        ch_vcf
+        ch_fasta,
+        ch_cache
     )
 
 
