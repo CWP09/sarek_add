@@ -10,7 +10,7 @@ process VCF2MAF {
         'biocontainers/mulled-v2-b6fc09bed47d0dc4d8384ce9e04af5806f2cc91b:305092c6f8420acd17377d2cc8b96e1c3ccb7d26-0' }"
 
     input:
-    tuple val(meta), path(vcf) from ch_vcf_transformed // Use an uncompressed VCF file!
+    tuple val(meta), path(vcf) // Use an uncompressed VCF file!
     path fasta                 // Required
     path vep_cache             // Required for VEP running. A default of /.vep is supplied.
 
@@ -38,14 +38,13 @@ process VCF2MAF {
         VEP_VERSION=""
     fi
 
-    gunzip -c $vcf > uncompressed_${vcf.baseName}.vcf
 
     vcf2maf.pl \\
         $args \\
         \$VEP_CMD \\
         $vep_cache_cmd \\
         --ref-fasta $fasta \\
-        --input-vcf uncompressed_${vcf.baseName}.vcf \\
+        --input-vcf $vcf \\
         --output-maf ${prefix}.maf
 
     cat <<-END_VERSIONS > versions.yml
