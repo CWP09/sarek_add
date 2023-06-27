@@ -33,11 +33,16 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
 
     ch_vcf_tbi = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi, failOnDuplicate: true, failOnMismatch: true)
 
+    ch_vcf_transformed = ch_vcf.map { meta, vcf, extra ->
+        return [meta, vcf]
+    }
+
     VCF2MAF(
-        ch_vcf,
+        ch_vcf_transformed,
         ch_fasta,
         ch_cache
     )
+
 
     // Gather versions of all tools used
     ch_versions = ch_versions.mix(ENSEMBLVEP_VEP.out.versions)
