@@ -267,6 +267,8 @@ include { VCF_QC_BCFTOOLS_VCFTOOLS                       } from '../subworkflows
 
 // Annotation
 include { VCF_ANNOTATE_ALL                               } from '../subworkflows/local/vcf_annotate_all/main'
+include { VCF2MAF } from '../modules/nf-core/vcf2maf/main'
+include { GATK4_VARIANTFILTRATION } from '../modules/nf-core/gatk4/variantfiltration/main' 
 
 // REPORTING VERSIONS OF SOFTWARE USED
 include { CUSTOM_DUMPSOFTWAREVERSIONS                    } from '../modules/nf-core/custom/dumpsoftwareversions/main'
@@ -274,9 +276,7 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS                    } from '../modules/nf-c
 // MULTIQC
 include { MULTIQC                                        } from '../modules/nf-core/multiqc/main'
 
-include { VCF2MAF } from '../modules/nf-core/vcf2maf/main'
 
-include { GATK4_VARIANTFILTRATION } from '../modules/nf-core/gatk4/variantfiltration/main' 
 
 
 /*
