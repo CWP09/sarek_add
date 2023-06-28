@@ -3,7 +3,7 @@
 //
 
 include { ENSEMBLVEP_VEP } from '../../../modules/nf-core/ensemblvep/vep/main'
-include { TABIX_TABIX    } from '../../../modules/nf-core/tabix/tabix/main'
+//include { TABIX_TABIX    } from '../../../modules/nf-core/tabix/tabix/main'
 include { VCF2MAF } from '../../../modules/nf-core/vcf2maf/main.nf'
 
 
@@ -31,13 +31,14 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
         ch_extra_files
     )
 
-    TABIX_TABIX(ENSEMBLVEP_VEP.out.vcf)
+    //TABIX_TABIX(ENSEMBLVEP_VEP.out.vcf)
 
-    ch_vcf_tbi = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi, failOnDuplicate: true, failOnMismatch: true)
-
+    //ch_vcf_tbi = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi, failOnDuplicate: true, failOnMismatch: true)
+    
+    ch_vcf_vep = ENSEMBLVEP_VEP.out.vcf
 
      VCF2MAF(
-        ch_vcf_tbi,
+        ch_vcf_vep,
         ch_fasta,
         ch_cache
     )
@@ -45,11 +46,11 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
 
     // Gather versions of all tools used
     ch_versions = ch_versions.mix(ENSEMBLVEP_VEP.out.versions)
-    ch_versions = ch_versions.mix(TABIX_TABIX.out.versions)
+    //ch_versions = ch_versions.mix(TABIX_TABIX.out.versions)
     ch_versions = ch_versions.mix(VCF2MAF.out.versions)
 
     emit:
-    vcf_tbi  = ch_vcf_tbi
+    //vcf_tbi  = ch_vcf_tbi
     json     = ENSEMBLVEP_VEP.out.json
     tab      = ENSEMBLVEP_VEP.out.tab
     reports  = ENSEMBLVEP_VEP.out.report
