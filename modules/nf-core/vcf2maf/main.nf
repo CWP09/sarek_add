@@ -38,7 +38,7 @@ process VCF2MAF {
         VEP_VERSION=""
     fi
 
-    gunzip -c ${vcf} > ${prefix}.vcf
+    gzip -d ${vcf} > ${prefix}.vcf
 
     vcf2maf.pl \\
         $args \\
