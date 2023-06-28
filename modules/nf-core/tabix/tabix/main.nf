@@ -1,7 +1,7 @@
 process TABIX_TABIX {
     tag "$meta.id"
     label 'process_single'
-    debug true
+
     conda "bioconda::tabix=1.11"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/tabix:1.11--hdfd78af_0' :
@@ -22,7 +22,6 @@ process TABIX_TABIX {
     def args = task.ext.args ?: ''
     """
     tabix $args $tab
-    
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
