@@ -21,7 +21,8 @@ process TABIX_TABIX {
     script:
     def args = task.ext.args ?: ''
     """
-    tabix $args $tab
+    bgzip -c $tab > $tab.gz
+    tabix $args $tab.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
