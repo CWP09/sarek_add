@@ -17,7 +17,7 @@ process ENSEMBLVEP_VEP {
     path  extra_files
 
     output:
-    tuple val(meta), path("*.vcf")  , optional:true, emit: vcf
+    tuple val(meta), path("*.vcf.gz")  , optional:true, emit: vcf
     tuple val(meta), path("*.tab.gz")  , optional:true, emit: tab
     tuple val(meta), path("*.json.gz") , optional:true, emit: json
     path "*.summary.html"              , emit: report
@@ -36,7 +36,7 @@ process ENSEMBLVEP_VEP {
     """
     vep \\
         -i $vcf \\
-        -o ${prefix}.${file_extension} \\
+        -o ${prefix}.${file_extension}.gz \\
         $args \\
         $reference \\
         --assembly $genome \\
@@ -57,7 +57,7 @@ process ENSEMBLVEP_VEP {
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}.vcf
+    touch ${prefix}.vcf.gz
     touch ${prefix}.tab.gz
     touch ${prefix}.json.gz
     touch ${prefix}.summary.html
