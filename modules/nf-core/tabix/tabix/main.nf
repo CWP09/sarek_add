@@ -11,7 +11,6 @@ process TABIX_TABIX {
     tuple val(meta), path(tab)
 
     output:
-    tuple val(meta), path("*.gz"), optional:true, emit: tbg
     tuple val(meta), path("*.tbi"), optional:true, emit: tbi
     tuple val(meta), path("*.csi"), optional:true, emit: csi
     path  "versions.yml"          , emit: versions
@@ -22,9 +21,7 @@ process TABIX_TABIX {
     script:
     def args = task.ext.args ?: ''
     """
-    ls $tab
-    bgzip -c $tab > ${tab}.gz
-    tabix $args ${tab}.gz
+    tabix $args $tab
     
 
     cat <<-END_VERSIONS > versions.yml
