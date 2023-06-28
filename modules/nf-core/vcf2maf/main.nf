@@ -27,20 +27,7 @@ process VCF2MAF {
     def VERSION = '1.6.21'
 
     """
-    if command -v vep &> /dev/null
-    then
-        VEP_CMD="--vep-path \$(dirname \$(type -p vep))"
-        VEP_VERSION=\$(echo -e "\\n    ensemblvep: \$( echo \$(vep --help 2>&1) | sed 's/^.*Versions:.*ensembl-vep : //;s/ .*\$//')")
-    else
-        VEP_CMD=""
-        VEP_VERSION=""
-    fi
-
-    if [[ "${vcf}" == *.gz ]]; then
-        gzip -d ${vcf} > ${prefix}.vcf
-    else
-        cp ${vcf} ${prefix}.vcf
-    fi
+    gzip -c -d ${vcf} > ${prefix}.vcf
 
     vcf2maf.pl \\
         $args \\
