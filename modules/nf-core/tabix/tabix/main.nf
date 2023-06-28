@@ -1,7 +1,7 @@
 process TABIX_TABIX {
     tag "$meta.id"
     label 'process_single'
-
+    debug true
     conda "bioconda::tabix=1.11"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/tabix:1.11--hdfd78af_0' :
@@ -11,6 +11,7 @@ process TABIX_TABIX {
     tuple val(meta), path(tab)
 
     output:
+    tuple val(meta), path("*.gz"), optional:true, emit: tbg
     tuple val(meta), path("*.tbi"), optional:true, emit: tbi
     tuple val(meta), path("*.csi"), optional:true, emit: csi
     path  "versions.yml"          , emit: versions
@@ -21,6 +22,7 @@ process TABIX_TABIX {
     script:
     def args = task.ext.args ?: ''
     """
+    ls $tab
     bgzip -c $tab > ${tab}.gz
     tabix $args ${tab}.gz
     
