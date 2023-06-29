@@ -27,13 +27,12 @@ process VCF2MAF {
     def VERSION = '1.6.21'
 
     """
-    bgzip -c -d ${vcf} > ${prefix}.vcf | chmod 777 ${prefix}.vcf
+    bgzip -c -d ${vcf} > ${prefix}.vcf
 
     vcf2maf.pl \\
         $args \\
         \$VEP_CMD \\
         $vep_cache_cmd \\
-        --ref-fasta $fasta \\
         --input-vcf ${prefix}.vcf \\
         --output-maf ${prefix}.maf
 
