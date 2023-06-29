@@ -11,7 +11,7 @@ process VCF2MAF {
     input:
     tuple val(meta), path(vcf)
     path cache
-    
+    path '/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta'
 
     output:
     tuple val(meta), path("*.maf"), emit: maf
@@ -27,11 +27,22 @@ process VCF2MAF {
     def VERSION = '1.6.21'
 
     """
+    if command -v vep &> /dev/null
+    then
+        VEP_CMD="--vep-path \$(dirname \$(type -p vep))"
+        VEP_VERSION=\$(echo -e "\\n    ensemblvep: \$( echo \$(vep --help 2>&1) | sed 's/^.*Versions:.*ensembl-vep : //;s/ .*\$//')")
+    else
+        VEP_CMD=""
+        VEP_VERSION=""
+    fi
+
     bgzip -c -d ${vcf} > ${prefix}.vcf
 
     vcf2maf.pl \\
         $args \\
+        \$VEP_CMD \\
         $vep_cache_cmd \\
+        --ref-fasta Homo_sapiens_assembly38.fasta \\
         --input-vcf ${prefix}.vcf \\
         --output-maf ${prefix}.maf
 
