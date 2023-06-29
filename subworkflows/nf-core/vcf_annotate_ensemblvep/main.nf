@@ -39,7 +39,6 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
 
     VCF2MAF(
         ch_vcf,
-        ch_fasta,
         ch_cache
     )
 
