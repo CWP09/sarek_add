@@ -3,9 +3,8 @@
 //
 
 include { ENSEMBLVEP_VEP } from '../../../modules/nf-core/ensemblvep/vep/main'
-include { VCF2MAF        } from '../../../modules/nf-core/vcf2maf/main'
 include { TABIX_TABIX    } from '../../../modules/nf-core/tabix/tabix/main'
-
+include { VCF2MAF        } from '../../../modules/nf-core/vcf2maf/main'
 
 
 workflow VCF_ANNOTATE_ENSEMBLVEP {
@@ -31,17 +30,17 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
         ch_extra_files
     )
 
-    VCF2MAF(
-        ch_vcf, 
-        ch_fasta, 
-        ch_cache
-    )
 
     TABIX_TABIX(ENSEMBLVEP_VEP.out.vcf)
 
     ch_vcf_tbi = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi, failOnDuplicate: true, failOnMismatch: true)
     
 
+    VCF2MAF(
+        ch_vcf, 
+        ch_fasta, 
+        ch_cache
+    )
 
     // Gather versions of all tools used
     ch_versions = ch_versions.mix(ENSEMBLVEP_VEP.out.versions)
