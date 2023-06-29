@@ -11,7 +11,7 @@ process VCF2MAF {
     input:
     tuple val(meta), path(vcf)
     path fasta
-    path vep_cache
+    path cache
 
     output:
     tuple val(meta), path("*.maf"), emit: maf
@@ -23,7 +23,7 @@ process VCF2MAF {
     script:
     def args          = task.ext.args   ?: ''
     def prefix        = task.ext.prefix ?: "${meta.id}"
-    def vep_cache_cmd = vep_cache       ? "--vep-data $vep_cache" : ""
+    def vep_cache_cmd = cache       ? "--vep-data $vep_cache" : ""
     def VERSION = '1.6.21'
 
     """
