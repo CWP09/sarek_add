@@ -27,13 +27,14 @@ process VCF2MAF {
     def VERSION = '1.6.21'
 
     """
+    echo $fasta
     bgzip -c -d ${vcf} > ${prefix}.vcf
 
     vcf2maf.pl \\
         $args \\
         \$VEP_CMD \\
         $vep_cache_cmd \\
-        --ref-fasta /data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta \\
+        --ref-fasta $fasta \\
         --input-vcf ${prefix}.vcf \\
         --output-maf ${prefix}.maf
 
