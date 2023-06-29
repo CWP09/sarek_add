@@ -39,7 +39,7 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
 
     VCF2MAF(
         ch_vcf,
-        ch_fasta,
+        '/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta',
         ch_cache
     )
 
