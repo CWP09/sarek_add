@@ -10,7 +10,7 @@ process VCF2MAF {
 
     input:
     tuple val(meta), path(vcf)
-    tuple val(meta2), path(fasta)
+    tuple val(meta), path(fasta)
     path cache
 
     output:
