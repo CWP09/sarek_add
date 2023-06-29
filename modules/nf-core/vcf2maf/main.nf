@@ -25,6 +25,7 @@ process VCF2MAF {
     def prefix        = task.ext.prefix ?: "${meta.id}"
     def vep_cache_cmd = cache       ? "--vep-data $cache" : ""
     def VERSION = '1.6.21'
+    def fasta = '/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta'
 
     """
     echo $fasta
