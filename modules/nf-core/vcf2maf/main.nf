@@ -33,6 +33,7 @@ process VCF2MAF {
         $args \\
         \$VEP_CMD \\
         $vep_cache_cmd \\
+        --ref-fasta /data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta \\
         --input-vcf ${prefix}.vcf \\
         --output-maf ${prefix}.maf
 
