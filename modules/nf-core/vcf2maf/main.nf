@@ -10,9 +10,7 @@ process VCF2MAF {
 
     input:
     tuple val(meta), path(vcf)
-    tuple val(meta2), path(fasta)
     path cache
-    // path "/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta"
     
 
     output:
@@ -27,17 +25,14 @@ process VCF2MAF {
     def prefix        = task.ext.prefix ?: "${meta.id}"
     def vep_cache_cmd = cache       ? "--vep-data $cache" : ""
     def VERSION = '1.6.21'
-    def fasta = '/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta'
 
     """
-    echo $fasta
     bgzip -c -d ${vcf} > ${prefix}.vcf
 
     vcf2maf.pl \\
         $args \\
         \$VEP_CMD \\
         $vep_cache_cmd \\
-        --ref-fasta $fasta \\
         --input-vcf ${prefix}.vcf \\
         --output-maf ${prefix}.maf
 
