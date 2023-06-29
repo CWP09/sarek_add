@@ -27,7 +27,7 @@ process VCF2MAF {
     def VERSION = '1.6.21'
 
     """
-    bgzip -c -d ${vcf} > ${prefix}.vcf
+    bgzip -c -d ${vcf} > ${prefix}.vcf | chmod 777 ${prefix}.vcf
 
     vcf2maf.pl \\
         $args \\
