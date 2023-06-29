@@ -39,7 +39,7 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
     VCF2MAF(
         ch_vcf_tbi.map { meta, vcf, tbi -> [meta, vcf] }, 
         ch_fasta, 
-        ch_cache
+        ch_cache_version
     )
 
 
