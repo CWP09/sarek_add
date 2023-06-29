@@ -10,8 +10,9 @@ process VCF2MAF {
 
     input:
     tuple val(meta), path(vcf)
+    tuble val(meta2), path(fasta)
     path cache
-    path '/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta'
+
 
     output:
     tuple val(meta), path("*.maf"), emit: maf
@@ -42,7 +43,7 @@ process VCF2MAF {
         $args \\
         \$VEP_CMD \\
         $vep_cache_cmd \\
-        --ref-fasta Homo_sapiens_assembly38.fasta \\
+        --ref-fasta $fasta \\
         --input-vcf ${prefix}.vcf \\
         --output-maf ${prefix}.maf
 
