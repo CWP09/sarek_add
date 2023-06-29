@@ -36,17 +36,14 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
 
     ch_vcf_tbi = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi, failOnDuplicate: true, failOnMismatch: true)
 
-    ch_vcf_dup = ch_vcf.duplicate()
-    ch_vcf_dup.view()
-    ch_fasta_dup = ch_fasta.duplicate()
-    ch_fasta_dup.view()
-    ch_cache_dup = ch_cache.duplicate()
-    ch_cache_dup.view()    
-    
+    ch_vcf.first().map { meta, vcf -> [meta, vcf] }.set { ch_vcf_collected }
+    ch_fasta.first().map { meta, fasta -> [meta, fasta] }.set { ch_fasta_collected }
+    ch_cache.first().map { meta, cache -> [meta, cache] }.set { ch_cache_collected }
+
     VCF2MAF(
-        ch_vcf, 
-        ch_fasta, 
-        ch_cache
+        ch_vcf_collected,
+        ch_fasta_collected,
+        ch_cache_collected
     )
 
     // Gather versions of all tools used
