@@ -10,7 +10,7 @@ process VCF2MAF {
 
     input:
     tuple val(meta), path(vcf)
-    path fasta
+    tuple val(meta2), path(fasta)
     path cache
     path "/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta"
     
