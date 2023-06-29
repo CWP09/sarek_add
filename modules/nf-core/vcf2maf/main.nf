@@ -12,7 +12,7 @@ process VCF2MAF {
     tuple val(meta), path(vcf)
     tuple val(meta2), path(fasta)
     path cache
-    path "/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta"
+    // path "/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta"
     
 
     output:
