@@ -428,7 +428,7 @@
                     },
                     "vcf2maf": {
                         "branch": "master",
-                        "git_sha": "84a1d6856d6e70911cfda66a7d6e0b224da46e83",
+                        "git_sha": "603ecbd9f45300c9788f197d2a15a005685b4220",
                         "installed_by": ["modules"]
                     },
                     "vcftools": {
@@ -442,7 +442,7 @@
                 "nf-core": {
                     "vcf_annotate_ensemblvep": {
                         "branch": "master",
-                        "git_sha": "84a1d6856d6e70911cfda66a7d6e0b224da46e83",
+                        "git_sha": "a9784afdd5dcda23b84e64db75dc591065d64653",
                         "installed_by": ["subworkflows"]
                     },
                     "vcf_annotate_snpeff": {
