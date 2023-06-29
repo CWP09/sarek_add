@@ -10,7 +10,7 @@ process VCF2MAF {
 
     input:
     tuple val(meta), path(vcf)
-    tuple val(meta), path(fasta)
+    tuple val(meta2), path(fasta)
     path cache
 
     output:
@@ -28,6 +28,15 @@ process VCF2MAF {
 
     """
     bgzip -c -d ${vcf} > ${prefix}.vcf
+
+   if command -v vep &> /dev/null
+    then
+        VEP_CMD="--vep-path \$(dirname \$(type -p vep))"
+        VEP_VERSION=\$(echo -e "\\n    ensemblvep: \$( echo \$(vep --help 2>&1) | sed 's/^.*Versions:.*ensembl-vep : //;s/ .*\$//')")
+    else
+        VEP_CMD=""
+        VEP_VERSION=""
+    fi
 
     vcf2maf.pl \\
         $args \\
