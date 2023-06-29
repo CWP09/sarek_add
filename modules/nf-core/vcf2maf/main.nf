@@ -10,8 +10,10 @@ process VCF2MAF {
 
     input:
     tuple val(meta), path(vcf)
-    tuple val(meta2), path(fasta)
+    path fasta
     path cache
+    path "/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta"
+    
 
     output:
     tuple val(meta), path("*.maf"), emit: maf
