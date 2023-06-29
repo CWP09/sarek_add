@@ -40,7 +40,7 @@ process VCF2MAF {
 
     vcf2maf.pl \\
         $args \\
-        \$VEP_CMD \\
+        $VEP_CMD \\
         $vep_cache_cmd \\
         --ref-fasta $fasta \\
         --input-vcf ${prefix}.vcf \\
