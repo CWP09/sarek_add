@@ -36,10 +36,9 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
 
     ch_vcf_tbi = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi, failOnDuplicate: true, failOnMismatch: true)
 
-    ch_vcf.map { meta, vcf, extra -> [meta, vcf] }.set { ch_vcf_prepped }
 
     VCF2MAF(
-        ch_vcf_prepped,
+        ch_vcf,
         ch_fasta,
         ch_cache
     )
