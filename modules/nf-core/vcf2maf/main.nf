@@ -23,24 +23,15 @@ process VCF2MAF {
     script:
     def args          = task.ext.args   ?: ''
     def prefix        = task.ext.prefix ?: "${meta.id}"
-    def vep_cache_cmd = cache       ? "--vep-data $vep_cache" : ""
+    def vep_cache_cmd = cache       ? "--vep-data $cache" : ""
     def VERSION = '1.6.21'
 
     """
     bgzip -c -d ${vcf} > ${prefix}.vcf
 
-   if command -v vep &> /dev/null
-    then
-        VEP_CMD="--vep-path \$(dirname \$(type -p vep))"
-        VEP_VERSION=\$(echo -e "\\n    ensemblvep: \$( echo \$(vep --help 2>&1) | sed 's/^.*Versions:.*ensembl-vep : //;s/ .*\$//')")
-    else
-        VEP_CMD=""
-        VEP_VERSION=""
-    fi
-
     vcf2maf.pl \\
         $args \\
-        $VEP_CMD \\
+        \$VEP_CMD \\
         $vep_cache_cmd \\
         --ref-fasta $fasta \\
         --input-vcf ${prefix}.vcf \\
