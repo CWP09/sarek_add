@@ -20,6 +20,7 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
     main:
     ch_versions = Channel.empty()
 
+
     ENSEMBLVEP_VEP(
         ch_vcf,
         val_genome,
@@ -34,8 +35,14 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
     TABIX_TABIX(ENSEMBLVEP_VEP.out.vcf)
 
     ch_vcf_tbi = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi, failOnDuplicate: true, failOnMismatch: true)
-    
 
+    ch_vcf_dup = ch_vcf.duplicate()
+    ch_vcf_dup.view()
+    ch_fasta_dup = ch_fasta.duplicate()
+    ch_fasta_dup.view()
+    ch_cache_dup = ch_cache.duplicate()
+    ch_cache_dup.view()    
+    
     VCF2MAF(
         ch_vcf, 
         ch_fasta, 
