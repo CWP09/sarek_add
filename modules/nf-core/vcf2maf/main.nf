@@ -31,7 +31,6 @@ process VCF2MAF {
 
     vcf2maf.pl \\
         $args \\
-        \$VEP_CMD \\
         $vep_cache_cmd \\
         --input-vcf ${prefix}.vcf \\
         --output-maf ${prefix}.maf
