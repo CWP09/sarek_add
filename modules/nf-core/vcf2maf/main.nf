@@ -39,7 +39,7 @@ process VCF2MAF {
 
     bgzip -c -d ${vcf} > ${prefix}.vcf
 
-    vcf2maf.pl \\
+    /data/chaewon/anaconda3/envs/ensembl-vep-109/bin/vcf2maf.pl \\
         $args \\
         \$VEP_CMD \\
         $vep_cache_cmd \\
