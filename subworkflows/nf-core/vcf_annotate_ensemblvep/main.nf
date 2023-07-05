@@ -35,10 +35,10 @@ workflow VCF_ANNOTATE_ENSEMBLVEP {
     TABIX_TABIX(ENSEMBLVEP_VEP.out.vcf)
 
     ch_vcf_tbi = ENSEMBLVEP_VEP.out.vcf.join(TABIX_TABIX.out.tbi, failOnDuplicate: true, failOnMismatch: true)
-
+    ch_vcf_ann = ENSEMBLVEP_VEP.out.vcf
 
     VCF2MAF(
-        ch_vcf,
+        ch_vcf_ann,
         '/data/chaewon/ref/GRCh38/Homo_sapiens_assembly38.fasta',
         ch_cache
     )
